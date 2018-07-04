@@ -16,8 +16,12 @@ Game.Preloader.prototype = {
 
 		//Load All assets
 
-		this.load.tilemap('map', "assets/wo.csv");
-		this.load.image('tileset', "assets/tileset.png");
+		this.load.tilemap('map', "assets/one.csv");
+		this.load.image('tilenew', "assets/tilenew.png");
+
+		this.load.image('enemy', "assets/enemy.png");
+		this.load.image('bullet', "assets/bullet.png");
+
 
 		this.load.spritesheet('player', "assets/player.png", 24,26);
 	},
