@@ -22,11 +22,15 @@ Game.Preloader.prototype = {
 		this.load.image('enemy', "assets/enemy.png");
 		this.load.image('bullet', "assets/bullet.png");
 
+		this.load.image('titlescreen', "assets/titlescreen.png");
+		this.load.image('button', "assets/button.png");
+		
+
 
 		this.load.spritesheet('player', "assets/player.png", 24,26);
 	},
 
 	create: function() {
-		this.state.start('Level1');
+		this.state.start('MainMenu');
 	}
 }

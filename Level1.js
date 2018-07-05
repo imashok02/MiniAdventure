@@ -52,7 +52,9 @@ Game.Level1.prototype = {
 
 		map.setTileIndexCallback(27, this.resetPlayer, this);
 
-		map.setTileIndexCallback(13, this.getCoin, this);		
+		map.setTileIndexCallback(13, this.getCoin, this);
+
+		map.setTileIndexCallback(13, this.speedpowerup, this);		
 
 		player = this.add.sprite(100,560, 'player');
 		player.anchor.setTo(0.5,0.5);
@@ -74,6 +76,7 @@ Game.Level1.prototype = {
 
 
 		enemy1 = new Enemy(0,game,player.x+400,player.y-200);
+		enemy2 = new Enemy(0,game,player.x+800,player.y-150);
 
 		bullets = game.add.group();
 		bullets.enableBody =  true;
@@ -96,6 +99,8 @@ Game.Level1.prototype = {
 		player.body.velocity.x = 0;
 
 		this.physics.arcade.collide(player, layer);
+		this.physics.arcade.collide(player,enemy1.enemy, this.resetPlayer);
+		this.physics.arcade.collide(player,enemy2.enemy, this.resetPlayer);
 
 
 		if(controls.right.isDown)
@@ -130,16 +135,16 @@ Game.Level1.prototype = {
 			enemy1.enemy.kill();
 		}
 
+		if(checkOverlap(bullets,enemy2.enemy))
+		{
+			enemy2.enemy.kill();
+		}
+
 
 
 		if(player.body.velocity.x == 0 && player.body.velocity.y == 0)
 		{
 			player.animations.play('idle');
-		}
-
-		if(checkOverlap(player,enemy1.enemy))
-		{
-			this.resetPlayer();
 		}
 
 	},
@@ -150,6 +155,16 @@ Game.Level1.prototype = {
 
 	getCoin: function() {
 		map.putTile(-1,layer.getTileX(player.x), layer.getTileY(player.y));
+	},
+
+	speedpowerup: function() {
+		map.putTile(-1,layer.getTileX(player.x), layer.getTileY(player.y));
+
+		playerSpeed +=50;
+
+		this.time.events.add(Phaser.Timer.SECOND * 2, function(){
+			playerSpeed -=50;
+		});
 	},
 
 	ShootBullet: function() {
